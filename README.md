@@ -1,16 +1,64 @@
-# React + Vite
+# GSK Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-definition, interactive portfolio showcasing the work and skills of **Gungret Samson Karami**, a Frontend Specialist dedicated to crafting pixel-perfect web experiences.
 
-Currently, two official plugins are available:
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Framer Motion](https://img.shields.io/badge/Framer-Motion-black?style=for-the-badge&logo=framer&logoColor=blue)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Overview
 
-## React Compiler
+This portfolio is designed with a **premium, glassmorphic aesthetic**, featuring intense animations and a highly responsive layout. It serves as a digital home for my projects, career milestones, and technical proficiency.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Key Features
 
-## Expanding the ESLint configuration
+- **Dynamic Animations**: Powered by `framer-motion` for character-by-character reveals, 3D tilts, and smooth transitions.
+- **Glassmorphic UI**: A modern design system utilizing backdrop blurs and subtle gradients.
+- **Micro-interactions**: Interactive elements like floating tech icons, draggable components, and hover-triggered effects.
+- **Fully Responsive**: Optimized for all devices, featuring a redesigned full-screen mobile navigation and overflow-safe sections.
+- **Interactive Contact Form**: Seamless communication line using Formspree integration.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Technology Stack
+
+- **Core**: React 18, Vite
+- **Animations**: Framer Motion
+- **Styling**: Vanilla CSS (CSS Variables, Flexbox/Grid)
+- **Forms**: Formspree
+
+## 🏗️ Project Structure
+
+```text
+src/
+├── assets/         # Static assets and images
+├── components/     # Reusable UI components (Hero, About, Projects, etc.)
+├── App.jsx         # Main application entry and layout
+├── index.css       # Global styles and design system tokens
+└── main.jsx        # React root initialization
+```
+
+## 🏁 Getting Started
+
+### Prerequisites
+
+- Node.js (v16+)
+- NPM or Yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/glitch-samson/Portfolio.git
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+Built with passion and React by [Gungret Samson Karami](https://github.com/glitch-samson).
