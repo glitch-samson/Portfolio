@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001
   });
+
+  const navLinks = [
+    { name: 'About', href: '#about' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Work', href: '#projects' },
+    { name: 'Hire Me', href: '#contact', isCta: true },
+  ];
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +28,18 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Body scroll lock
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
 
   return (
     <>
@@ -34,23 +57,80 @@ const Navbar = () => {
           >
             GSK<span className="dot">.</span>
           </motion.a>
-          <ul className="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Work</a></li>
-            <li>
-              <motion.a
-                href="#contact"
-                className="nav-cta"
-                whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(59, 130, 246, 0.5)" }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Hire Me
-              </motion.a>
-            </li>
+          {/* Desktop Menu */}
+          <ul className="nav-links desktop-only">
+            {navLinks.map((link, i) => (
+              <li key={i}>
+                <motion.a
+                  href={link.href}
+                  className={link.isCta ? 'nav-cta' : ''}
+                  whileHover={link.isCta ? { scale: 1.05, boxShadow: "0 0 20px rgba(59, 130, 246, 0.5)" } : { color: "var(--text-primary)" }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {link.name}
+                </motion.a>
+              </li>
+            ))}
           </ul>
+
+          {/* Hamburger Toggle */}
+          <div className="hamburger" onClick={toggleMenu}>
+            <motion.div
+              className="bar"
+              animate={isMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+            />
+            <motion.div
+              className="bar"
+              animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+            />
+            <motion.div
+              className="bar"
+              animate={isMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+            />
+          </div>
         </div>
+
+        {/* Mobile Menu Overlay */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              className="mobile-menu"
+              initial={{ opacity: 0, y: '-100%' }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: '-100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            >
+              <div className="mobile-menu-header container">
+                <a href="#hero" className="logo" onClick={() => setIsMenuOpen(false)}>
+                  GSK<span className="dot">.</span>
+                </a>
+                <div className="close-menu" onClick={toggleMenu}>
+                  <div className="bar" style={{ transform: 'rotate(45deg)', position: 'absolute' }}></div>
+                  <div className="bar" style={{ transform: 'rotate(-45deg)' }}></div>
+                </div>
+              </div>
+              <ul className="mobile-nav-links">
+                {navLinks.map((link, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.1 * i }}
+                  >
+                    <a
+                      href={link.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={link.isCta ? 'mobile-nav-cta' : ''}
+                    >
+                      {link.name}
+                    </a>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <style dangerouslySetInnerHTML={{
           __html: `
             .scroll-bar {
@@ -89,6 +169,8 @@ const Navbar = () => {
               font-weight: 800;
               letter-spacing: -1px;
               cursor: pointer;
+              z-index: 1100;
+              position: relative;
             }
 
             .dot {
@@ -101,15 +183,15 @@ const Navbar = () => {
               align-items: center;
             }
 
+            .desktop-only {
+                display: flex;
+            }
+
             .nav-links a {
               font-size: 0.9rem;
               font-weight: 500;
               color: var(--text-secondary);
               transition: color var(--transition-fast);
-            }
-
-            .nav-links a:hover {
-              color: var(--text-primary);
             }
 
             .nav-cta {
@@ -120,9 +202,88 @@ const Navbar = () => {
               display: inline-block;
             }
 
-            @media (max-width: 768px) {
-              .nav-links {
+            /* Hamburger Menu */
+            .hamburger {
                 display: none;
+                flex-direction: column;
+                gap: 6px;
+                cursor: pointer;
+                z-index: 1100;
+                position: relative;
+                padding: 10px;
+            }
+
+            .bar {
+                width: 25px;
+                height: 2px;
+                background: white;
+                border-radius: 2px;
+            }
+
+            /* Mobile Menu Overlay */
+            .mobile-menu {
+                position: fixed;
+                inset: 0;
+                width: 100%;
+                height: 100vh;
+                background: #000000;
+                display: flex;
+                flex-direction: column;
+                z-index: 2000;
+            }
+
+            .mobile-menu-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 30px 20px;
+                width: 100%;
+            }
+
+            .close-menu {
+                width: 30px;
+                height: 30px;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+
+            .mobile-nav-links {
+                list-style: none;
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+                padding-bottom: 80px;
+            }
+
+            .mobile-nav-links a {
+                font-size: 2.5rem;
+                font-weight: 800;
+                color: white;
+                text-decoration: none;
+                text-transform: uppercase;
+                letter-spacing: -1px;
+            }
+
+            .mobile-nav-cta {
+                padding: 15px 45px;
+                background: var(--accent-gradient);
+                border-radius: 50px;
+                display: inline-block;
+                font-size: 1.5rem !important;
+            }
+
+            @media (max-width: 768px) {
+              .desktop-only {
+                display: none;
+              }
+              .hamburger {
+                display: flex;
               }
             }
           `}} />

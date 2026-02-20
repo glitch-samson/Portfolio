@@ -164,9 +164,14 @@ const Projects = () => {
           50% { transform: translateY(-10px); }
         }
 
+        .projects {
+          position: relative;
+          overflow: hidden;
+        }
+
         .projects-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
           gap: 40px;
           margin-top: 60px;
         }

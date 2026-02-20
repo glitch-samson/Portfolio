@@ -116,6 +116,11 @@ const Experience = () => {
           50% { transform: translate(15px, -15px) rotate(10deg); }
         }
 
+        .experience {
+          position: relative;
+          overflow: hidden;
+        }
+
         .experience-timeline {
           position: relative;
           max-width: 900px;

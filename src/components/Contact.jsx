@@ -168,6 +168,11 @@ const Contact = () => {
       </div>
       <style dangerouslySetInnerHTML={{
         __html: `
+        .contact {
+          position: relative;
+          overflow: hidden;
+        }
+
         .contact-box {
           max-width: 800px;
           margin: 0 auto;
