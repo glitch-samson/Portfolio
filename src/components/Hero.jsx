@@ -53,14 +53,19 @@ const Hero = () => {
             animate="visible"
           >
             Hi, I'm <br />
-            {title.split("").map((char, index) => (
-              <motion.span
-                key={index}
-                variants={letterVariants}
-                className={char === " " ? "space" : "gradient-text"}
-              >
-                {char}
-              </motion.span>
+            {title.split(" ").map((word, wordIndex) => (
+              <span key={wordIndex} className="name-word-wrapper">
+                {word.split("").map((char, charIndex) => (
+                  <motion.span
+                    key={charIndex}
+                    variants={letterVariants}
+                    className="gradient-text"
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+                {wordIndex < 2 && <span className="name-space">&nbsp;</span>}
+              </span>
             ))}
           </motion.h1>
 
@@ -179,27 +184,29 @@ const Hero = () => {
         }
 
         .hero-title {
-          font-size: clamp(3rem, 10vw, 5.5rem);
-          line-height: 1;
-          margin-bottom: 25px;
+          font-size: clamp(2.5rem, 12vw, 5.5rem);
+          line-height: 1.1;
+          margin-bottom: 20px;
           font-weight: 900;
-          letter-spacing: -3px;
+          letter-spacing: -2px;
         }
 
-        .hero-title span {
+        .hero-title .name-word-wrapper {
           display: inline-block;
         }
 
-        .hero-title .space {
-          width: 0.3em;
+        .hero-title .name-space {
+          display: inline-block;
+          width: 0.25em;
         }
 
         .hero-subtitle {
-          font-size: 1.3rem;
+          font-size: 1.2rem;
           color: var(--text-secondary);
           max-width: 650px;
-          margin-bottom: 45px;
+          margin-bottom: 40px;
           font-weight: 400;
+          line-height: 1.5;
         }
 
         .highlight {
@@ -249,9 +256,24 @@ const Hero = () => {
         .blob-3 { width: 400px; height: 400px; background: rgba(59, 130, 246, 0.1); top: 30%; left: 10%; }
 
         @media (max-width: 768px) {
+          .hero { padding-top: 120px; text-align: center; }
+          .hero-content { display: flex; flex-direction: column; align-items: center; }
           .hero-badge { margin-bottom: 20px; }
-          .hero-subtitle { font-size: 1.1rem; }
-          .tech-icon { width: 45px; height: 45px; font-size: 1.1rem; }
+          .hero-title { font-size: clamp(2.2rem, 15vw, 3.5rem); letter-spacing: -1px; margin-bottom: 15px; }
+          .hero-title .name-word-wrapper { display: block; }
+          .hero-title .name-space { display: none; }
+          .hero-subtitle { font-size: 1rem; margin-bottom: 30px; padding: 0 10px; }
+          .hero-cta { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 300px; }
+          .hero-cta .btn { width: 100%; }
+          .tech-icon { width: 40px; height: 40px; font-size: 1rem; opacity: 0.6; }
+          .tech-icon:nth-child(1) { top: 10%; left: 10%; }
+          .tech-icon:nth-child(2) { top: auto; bottom: 10%; right: 10%; }
+          .tech-icon:nth-child(3) { display: none; }
+          .tech-icon:nth-child(4) { top: 20%; right: 5%; }
+          .tech-icon:nth-child(5) { top: 5%; right: 20%; }
+          .blob-1 { width: 300px; height: 300px; top: -50px; right: -50px; }
+          .blob-2 { width: 250px; height: 250px; bottom: -50px; left: -50px; }
+          .blob-3 { display: none; }
         }
       `}} />
     </section>
